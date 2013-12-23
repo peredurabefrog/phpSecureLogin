@@ -48,7 +48,7 @@ include_once 'includes/register.inc.php';
             </li>
             <li>Your password and confirmation must match exactly</li>
         </ul>
-        <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post" name="registration_form">
+        <form method="post" name="registration_form">
             Username: <input type='text' name='username' id='username' /><br>
             Email: <input type="text" name="email" id="email" /><br>
             Password: <input type="password"
