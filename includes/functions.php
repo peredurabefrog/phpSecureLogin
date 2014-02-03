@@ -19,6 +19,13 @@
 
 include_once 'psl-config.php';
 
+function debugPrint($msg) {
+    if (DEBUG) {
+        error_log($msg);
+    }
+}
+
+
 function sec_session_start() {
     $session_name = 'sec_session_id';   // Set a custom session name 
     $secure = SECURE;
@@ -43,12 +50,17 @@ function sec_session_start() {
     session_regenerate_id();    // regenerated the session, delete the old one. 
 }
 
-function login($email, $password, $mysqli) {
+function login($user_or_email, $password, $mysqli) {
     // Using prepared statements means that SQL injection is not possible. 
-    if ($stmt = $mysqli->prepare("SELECT id, username, password, salt 
-				  FROM members 
-                                  WHERE email = ? LIMIT 1")) {
-        $stmt->bind_param('s', $email);  // Bind "$email" to parameter.
+    if ($stmt = $mysqli->prepare("SELECT id, username, password, salt
+        /* Babil: 'OR username = ?' adds support for login with username */
+		FROM members WHERE email = ? OR username = ? LIMIT 1")) {
+
+        /* Babil: Satisfies 'username = ?', incase user wanted to login with 
+         * username instead of password
+         */
+        $stmt->bind_param('ss', $user_or_email, $user_or_email);  // Bind "$email" to parameter.
+        
         $stmt->execute();    // Execute the prepared query.
         $stmt->store_result();
 
