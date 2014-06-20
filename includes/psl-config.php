@@ -56,3 +56,5 @@ define("DEFAULT_ROLE", "member");
  */
 define("SECURE", FALSE);    // For development purposes only!!!!
 
+define("DEBUG", TRUE);  /* Babil: for debugging */
+
