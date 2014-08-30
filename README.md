@@ -34,7 +34,7 @@ When it's done, users will be able to select from a variety of configuration opt
 
 You'll need Apache, mySQL and PHP5.3.x installed and working.  On Windows and Mac, an XAMPP installation will be fine.
 
-You'll also need to create a database called 'secure_login'.  When you've done that you need to create a user with just SELECT, UPDATE and DELETE privileges on the 'secure_login' database.  The user's name and password are given in the psl-config.php file.  If you're not intending to contribute, you can choose whatever login details you want, but you'll have to change the psl-config.php file to match your own details.
+You'll also need to create a database called 'secure_login'.  When you've done that you need to create a user with just SELECT, UPDATE and INSERT privileges on the 'secure_login' database.  The user's name and password are given in the psl-config.php file.  If you're not intending to contribute, you can choose whatever login details you want, but you'll have to change the psl-config.php file to match your own details.
 
 The code to create and populate the necessary tables is included in the 'secure_login.sql' file.  It populates the members table with a single user with the following details:
 
