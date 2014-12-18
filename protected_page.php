@@ -19,13 +19,12 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 
 sec_session_start();
-$hoi = hoi
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>vdboom</title>
+        <title>Protected page.</title>
         <link rel="stylesheet" href="styles/main.css" />
     </head>
     <body>
