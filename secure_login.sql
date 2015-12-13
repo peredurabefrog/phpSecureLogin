@@ -1,3 +1,10 @@
+-- CREATE DATABASE secure_login;
+
+-- CREATE USER 'sec_user'@'localhost' IDENTIFIED BY '4Fa98xkHVd2XmnfK';
+
+-- GRANT ALL PRIVILEGES ON secure_login.* TO 'sec_user'@'localhost';
+
+
 -- phpMyAdmin SQL Dump
 -- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'functions.php';
+include_once (__DIR__).'/includes/functions.php';
 sec_session_start();
 
 // Unset all session values 
@@ -31,5 +31,5 @@ setcookie(session_name(),'', time() - 42000, $params["path"], $params["domain"],
 
 // Destroy session 
 session_destroy();
-header("Location: ../index.php");
+header("Location: index.php");
 exit();

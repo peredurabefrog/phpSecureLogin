@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-include_once 'includes/db_connect.php';
-include_once 'includes/functions.php';
+include_once (__DIR__).'/includes/db_connect.php';
+include_once (__DIR__).'/includes/functions.php';
 
 sec_session_start();
 ?>
