@@ -2,3 +2,4 @@
 netbeans/*
 *#
 /.gitignore
+/includes/psl-config.php
