@@ -77,7 +77,7 @@
                         <input type="text" name="email" id="email" placeholder="e-mail ...">
                         <label for="password">Password:</label>
                         <input type="password" name="password" id="password" placeholder="password ...">
-                        <button type="submit" value="Login" onclick="formhash(this.form, this.form.password);" />
+                        <button type="submit" value="Login" onclick="formhash(this.form, this.form.password);">Login</button>
                     </form>
                 </div>
             </div>
