@@ -1,56 +1,89 @@
 <?php
-/**
- * Copyright (C) 2013 peredur.net
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-include_once 'includes/db_connect.php';
-include_once 'includes/functions.php';
+    require_once 'includes/db_connect.php';
+    require_once 'includes/functions.php';
 
-sec_session_start();
+    sec_session_start();
 
-if (login_check($mysqli) == true) {
-    $logged = 'in';
-} else {
-    $logged = 'out';
-}
-?>
-<!DOCTYPE html>
-<html>
+    if (login_check($mysqli) == true) {
+        $logged = 'in';
+        $_SESSION['loggedStatus'] = true;
+    } else {
+        $logged = 'out';
+        $_SESSION['loggedStatus'] = false;
+    }
+
+    if ($_SESSION['loggedStatus']): ?>
+
+    <!DOCTYPE html>
+    <html>
+
     <head>
-        <title>Secure Login: Log In</title>
-        <link rel="stylesheet" href="styles/main.css" />
-        <script type="text/JavaScript" src="js/sha512.js"></script> 
-        <script type="text/JavaScript" src="js/forms.js"></script> 
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/genaralFunctions.js"></script>
+
     </head>
+
     <body>
-        <?php
-        if (isset($_GET['error'])) {
-            echo '<p class="error">Error Logging In!</p>';
-        }
-        ?> 
-        <form action="includes/process_login.php" method="post" name="login_form"> 			
-            Email: <input type="text" name="email" />
-            Password: <input type="password" 
-                             name="password" 
-                             id="password"/>
-            <input type="button" 
-                   value="Login" 
-                   onclick="formhash(this.form, this.form.password);" /> 
-        </form>
-        <p>If you don't have a login, please <a href="register.php">register</a></p>
-        <p>If you are done, please <a href="includes/logout.php">log out</a>.</p>
-        <p>You are currently logged <?php echo $logged ?>.</p>
+        <div data-role="page">
+            <div data-role="header">
+                <h1>You need to logout</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form name="logout_form">
+                    <a onclick='changePage("logout.php");' class='ui-btn'>Log out</a>
+                </form>
+            </div>
+        </div>
     </body>
-</html>
+
+    </html>
+
+    <?php
+    else : ?>
+
+        <!DOCTYPE html>
+        <html>
+
+        <head>
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+
+            <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+            <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+            <script type="text/JavaScript" src="js/sha512.js"></script>
+            <script type="text/JavaScript" src="js/loginFunctions.js"></script>
+
+        </head>
+
+        <body>
+            <script type="text/javascript" src="js/genaralFunctions.js"></script>
+            <div data-role="page">
+                <div data-role="header">
+                    <h1>Welcome To My Homepage</h1>
+                </div>
+                <div data-role="main" class="ui-content">
+                    <form method="post" action="includes/process_login.php" method="post" name="login_form" id='login_form'>
+                        <h3>Login information</h3>
+                        <label for="email">E-mail:</label>
+                        <input type="text" name="email" id="email" placeholder="e-mail ...">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password" placeholder="password ...">
+                        <button type="submit" value="Login" onclick="formhash(this.form, this.form.password);" />
+                    </form>
+                </div>
+            </div>
+        </body>
+
+        </html>
+
+        <?php endif;
+    ?>

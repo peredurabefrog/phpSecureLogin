@@ -17,10 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'psl-config.php';   // Needed because functions.php is not included
+include_once 'functions.php';
+sec_session_start();
 
-$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
-if ($mysqli->connect_error) {
-    header("Location: ../error.php?err=Unable to connect to MySQL");
-    exit();
-}
+// Unset all session values
+$_SESSION = array();
+
+// get session parameters
+$params = session_get_cookie_params();
+
+// Delete the actual cookie.
+setcookie(session_name(),'', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+
+// Destroy session
+session_destroy();
+header("Location: ../index.php");
+exit();
