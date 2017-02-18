@@ -36,12 +36,13 @@ function processLogin() {
 
 //authenticates user
 function authenticateUser(nameUser, passwordUser) {
+    var url = getHostStart() + "/php/ProcessLogin.php";
     var requestMessage = {
         messageName: "processLogin",
         txtEmail: nameUser,
         hPassword: passwordUser
     };
-    dataLoad(mainObject.url, JSON.stringify(requestMessage), dataLoadNextSteps);
+    dataLoad(url, JSON.stringify(requestMessage), dataLoadNextSteps);
 }
 
 //if user has been authenticated jump to secure page

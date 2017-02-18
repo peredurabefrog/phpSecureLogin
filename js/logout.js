@@ -3,6 +3,7 @@ $(document).ready(function () {
     getLoginSessionData();
 });
 
+//continue processing if session is active
 function activeLoginSession() {}
 
 //validate session that user has logged in

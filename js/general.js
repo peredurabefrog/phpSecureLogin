@@ -1,7 +1,3 @@
-var mainObject = {
-    url: getHostStart() + "/php/userProcesses.php"
-}
-
 //get host start for the url of the request
 function getHostStart() {
     var protocol = $(location).attr('protocol');
@@ -17,7 +13,6 @@ function getHostStart() {
 
 //Load data from database
 function dataLoad(url, request, dataProcessingFunction) {
-    console.log(request);
     var posting = $.post(url, request, null, "json");
     posting.done(function (data) {
         dataProcessingFunction(data);
@@ -29,21 +24,23 @@ function dataLoad(url, request, dataProcessingFunction) {
 
 //check whether the user has an active session
 function getLoginSessionData() {
+    var url = getHostStart() + "/php/ProcessGetSession.php";
     var requestMessage = {
         messageName: "getSession"
     };
 
-    dataLoad(mainObject.url, JSON.stringify(requestMessage), validateSession);
+    dataLoad(url, JSON.stringify(requestMessage), validateSession);
 }
 
 
 //check whether the user has an active session
 function processLogout() {
+    var url = getHostStart() + "/php/ProcessLogout.php";
     var requestMessage = {
         messageName: "processLogout"
     };
 
-    dataLoad(mainObject.url, JSON.stringify(requestMessage), logoutSession);
+    dataLoad(url, JSON.stringify(requestMessage), logoutSession);
 }
 
 //validate session that user has logged in
@@ -58,6 +55,7 @@ function logoutSession(data) {
     }
 }
 
+//navigate to next page
 function navigateTo(page) {
     window.location.href = page;
 }
