@@ -12,4 +12,6 @@ The front-end uses jQuery and jQuery Mobile.
 Test login information
 Username : test_user Email : test@example.com Password : 6ZaxN2Vzm9NUJT2y
 
-Database settings stored under php/config.php. In case you want to move this file you have to add the path UserManager.php
+Database preparation stored under php/config.php. In case you want to move this file to a more secure place you have to add the correct path in UserManager.php for the config.php.
+
+The session related actions are separated for performance reason. The session handling having in on php file is possible, but not adviesed, because during login the session check classes are not required. Also for development purpose is more easier to work in smaller separeted modules. If there is some issue with one module you can easily work on it without dangering the other modules.
