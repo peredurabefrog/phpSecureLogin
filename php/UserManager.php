@@ -32,10 +32,9 @@
                         $loginStatus = -3;
                     }
 
+                    //track login actions if there is a valid user
                     $loginTrackQuery = "INSERT INTO login_attempts(user_id, loginTimeStamp, loginStatus) VALUES (".$db_userId.", \"".$timeStampNow."\", ".$loginStatus.");";
-
                     $stmt = $mysqli->prepare($loginTrackQuery);
-
                     $stmt->execute();
 
                 }else{

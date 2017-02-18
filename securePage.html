@@ -12,7 +12,7 @@
 
     <!-- scripts-->
     <script src="js/general.js"></script>
-    <script type="text/JavaScript" src="js/logout.js"></script>
+    <script type="text/JavaScript" src="js/securePage.js"></script>
 
 </head>
 
@@ -21,6 +21,10 @@
         <div data-role="header">
             <h1>Welcome To My secure page</h1>
             <button onclick="processLogout();" id='btn-logout'>Logout</button>
+        </div>
+        <div data-role="main" class="ui-content">
+            <button onclick="activeLoginSession();" id='check'>Trigger other API request</button>
+            <h2 id="secureResponse"></h2>
         </div>
     </div>
 </body>

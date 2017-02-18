@@ -4,7 +4,14 @@ $(document).ready(function () {
 });
 
 //continue processing if session is active
-function activeLoginSession() {}
+function activeLoginSession() {
+    var url = getHostStart() + "/php/ProcessUserAction.php";
+    var requestMessage = {
+        messageName: "otherAPIRequest",
+        currentTime: new Date()
+    };
+    dataLoad(url, JSON.stringify(requestMessage), visualizeResponse);
+}
 
 //validate session that user has logged in
 function validateSession(data) {
@@ -16,4 +23,8 @@ function validateSession(data) {
     } else {
         navigateTo("index.html");
     }
+}
+
+function visualizeResponse(data) {
+    $('#secureResponse').html(JSON.stringify(data));
 }
