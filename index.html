@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/JavaScript" src="js/sha512.js"></script>
+
+    <!-- scripts-->
+    <script src="js/general.js"></script>
+    <script type="text/JavaScript" src="js/login.js"></script>
+
+</head>
+
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Welcome To My Homepage</h1>
+        </div>
+        <div data-role="main" class="ui-content">
+            <h2 id="notification">&nbsp;</h2>
+            <form>
+                <h3>Login information</h3>
+                <label for="email">E-mail:</label>
+                <input type="text" name="email" id="email" placeholder="e-mail ...">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="password ...">
+            </form>
+            <button onclick="processLogin();" id='btn-login'>Login</button>
+        </div>
+    </div>
+</body>
+
+</html>
