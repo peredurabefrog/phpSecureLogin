@@ -2,6 +2,13 @@ These are MySQL database specific, but they are easily portable to any other dat
 
 CREATE DATABASE `secureLogin` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
 
+CREATE TABLE `login_attempts` (
+  `user_id` int(11) NOT NULL,
+  `loginTimeStamp` datetime NOT NULL,
+  `loginStatus` int(2) NOT NULL COMMENT 'wrong password: -3\nsuccess: 0',
+  PRIMARY KEY (`user_id`,`loginTimeStamp`,`loginStatus`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 CREATE TABLE `members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) COLLATE utf8_bin NOT NULL,

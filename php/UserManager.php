@@ -21,12 +21,23 @@
                 $stmt->fetch();
 
                 if ($stmt->num_rows == 1){
+                    $timeStampNow = date("Y-m-d H:i:s");
+                    $loginStatus = 0;
+
                     if($user->getPassword() == $db_password){
                         $user->setUserId($db_userId);
                         $user->setUsername($db_username);
                     }else{
                         $user->setUserId(-3);
+                        $loginStatus = -3;
                     }
+
+                    $loginTrackQuery = "INSERT INTO login_attempts(user_id, loginTimeStamp, loginStatus) VALUES (".$db_userId.", \"".$timeStampNow."\", ".$loginStatus.");";
+
+                    $stmt = $mysqli->prepare($loginTrackQuery);
+
+                    $stmt->execute();
+
                 }else{
                     $user->setUserId(-2);
                 }
