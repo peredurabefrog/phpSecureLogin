@@ -46,7 +46,7 @@ function processLogout() {
 //validate session that user has logged in
 function logoutSession(data) {
     if (
-        (data.status == -1)
+        (data.status == 0)
     ) {
         alert('succesful logout');
         navigateTo("index.html");
