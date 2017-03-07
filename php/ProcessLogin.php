@@ -1,11 +1,15 @@
 <?php
-    session_start();
     require_once 'LoginAdmin.php';
     require_once 'User.php';
+    require_once 'SessionFunctions.php';
+
+
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $messageRequest = json_decode(file_get_contents('php://input'), true);
         if($messageRequest['messageName'] == "processLogin"){
+
+            SessionMaintainer::create_secure_session();
 
             $user = new User();
             $user->setEmail($messageRequest['txtEmail']);

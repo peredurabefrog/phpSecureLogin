@@ -1,12 +1,14 @@
 <?php
-    session_start();
+
 	require_once 'User.php';
 	require_once 'UserManager.php';
+    require_once 'SessionFunctions.php';
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $messageRequest = json_decode(file_get_contents('php://input'), true);
         if($messageRequest['messageName'] == "getSession"){
 
+            SessionMaintainer::create_secure_session();
             $user = new User();
             if(session_status() == PHP_SESSION_ACTIVE){
                 $user = UserManager::getFromSession();

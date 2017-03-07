@@ -1,11 +1,13 @@
 <?php
-    session_start();
+
 	require_once 'User.php';
 	require_once 'UserManager.php';
+    require_once 'SessionFunctions.php';
 
     if($_SERVER['REQUEST_METHOD'] == "POST"){
         $messageRequest = json_decode(file_get_contents('php://input'), true);
         if($messageRequest['messageName'] == "processLogout"){
+            SessionMaintainer::create_secure_session();
 
             // Unset all session values
             $_SESSION = array();
@@ -22,7 +24,7 @@
             // Destroy session
             session_destroy();
 
-            $messageResponse = array("status"=>-1);
+            $messageResponse = array("status"=> 0, "msg" => "Succesful logout.");
 
         }else{
             $messageResponse = array("status" => -2, "msg" => "Sorry, this is just for logout.");

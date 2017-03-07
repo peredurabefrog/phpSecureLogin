@@ -3,6 +3,8 @@ The basic php logic is based on peredurabefrog's phpSecureLogin mixed with Diego
 This version of code separates the back-end and the front-end. 
 So the communication between the back-end and front-end is going to happen via JSON request-response. 
 
+>user management via php session
+
 PHP is going to handle the session management. In case of an active session it forwards the request (+expands it with logged in user information) for anouther API and forwards the response. In this example for anouther php file.
 
 Please note that in this solution PHP session manager is on the same machine (domain) as the front-end, this is because the session tracking.
@@ -26,5 +28,7 @@ Current solution workflow/functionalities:
 - Logout button is on the securePage.html it closes the session and navigates back to index.html page. Logout sent for ProcessLogout.php
 
 - OtherAPI call works from securePage. Pressing  the "Trigger other API request" button sends a request for ProcessUserAction.php which forwards the request for anouther PHP with help of curl. (curl needs to be installed). The response message is going to be displayed under the button. The button press is with timestamp. You can check the pressed timesstamp in the response.
+
+In the configuration file you have to specify a folder for session tracking with cookies. PHP should have read and write permissions for it. (php/SessionFunction.php)
 
 

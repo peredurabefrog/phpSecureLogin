@@ -1,7 +1,10 @@
 <?php
-    session_start();
+
     require_once 'config.php';
     require_once 'User.php';
+    require_once 'SessionFunctions.php';
+
+    SessionMaintainer::create_secure_session();
     class UserManager{
 
         public static function getUser($user)
