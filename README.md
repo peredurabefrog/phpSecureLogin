@@ -31,4 +31,27 @@ Current solution workflow/functionalities:
 
 In the configuration file you have to specify a folder for session tracking with cookies. PHP should have read and write permissions for it. (php/SessionFunction.php)
 
+>user management via JWT
 
+In the past years application authentication started to move toward JWT (JSON Web Token). For example Angular2 is not supporting php's session handling mechanism in the old fashion way. In order to authenticate we have to set up a such an authentication mechanism as well. 
+
+There are pretty good JWT implementations for example:
+https://github.com/lcobucci/jwt
+https://www.sitepoint.com/php-authorization-jwt-json-web-tokens/
+
+In this solution I used "lcobucci/jwt" 3.2.1 version. 
+On their github repository (linked above) the developers wrote that they change the usage way.
+
+Please note that if you want use the php-jwt you have to install that component first (composer php repository manager installation needs to be done first) and only after it you can use it. 
+
+You can do that in the next way:
+Navigate to "php-jwt" and in the command line execute the next command: 
+~> composer require lcobucci/jwt --update-no-dev
+This will install the vendor package. 
+
+After installation you have to link the "vendor/autoload.php" to your php file.
+Example done in "JWTManager.php" .
+
+Please note that namespaces can be tricky 
+In "JWTManager.php" you can find a line on the top like this: "use Lcobucci\JWT\Builder;" 
+This means after you have imported the vendor solution (require / include) then you have to add this line which will tell that from the "Lcobucci\JWT" namespace it will use the "Builder" class. Which means after the "use" you do not declare a physical path you just specify a namespace within the solution.
