@@ -55,3 +55,5 @@ Example done in "JWTManager.php" .
 Please note that namespaces can be tricky 
 In "JWTManager.php" you can find a line on the top like this: "use Lcobucci\JWT\Builder;" 
 This means after you have imported the vendor solution (require / include) then you have to add this line which will tell that from the "Lcobucci\JWT" namespace it will use the "Builder" class. Which means after the "use" you do not declare a physical path you just specify a namespace within the solution.
+
+With php-jwt there is one url called which will forward the requests based on messagename to the right php process. This simplifies the url management at the front-end side. 
