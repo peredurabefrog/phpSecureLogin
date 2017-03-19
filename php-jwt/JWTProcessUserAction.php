@@ -32,18 +32,16 @@
                     ($messageRequest['token'] != null) &&
                     ($messageRequest['token'] != "undefined")
                   ){
-                    //$txt = JWTManager::getToken();
 
-                    //$messageResponse = array("status" => 0, "msg" => "Yeee.");
+                    $tokenValidationResult = JWTManager::tokenParseAndValidate($messageRequest['token']);
 
-                    //user is still active check
-                    //$user = new User();
-                    //get user from active session
-                    //$user = UserManager::getFromSession();
-
-                    // adding extra tags for forward message and post to other API
-                    //$messageRequest['userId'] = $user->getUserId();
-                    //$messageRequest['email'] = $user->getEmail();
+                    if($tokenValidationResult['status'] == 0){
+                        $messageRequest = array_merge($messageRequest, $tokenValidationResult);
+                    }else{
+                        $forwardRequestFlag = 0;
+                        $messageResponse = $tokenValidationResult;
+                        $messageResponse['messageName'] = $messageRequest['messageName']."Response";
+                    }
 
                     $url = $url."/JWTOtherAPI.php";
                 }else{
