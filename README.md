@@ -1,6 +1,6 @@
 jt12395 -
 
-I forked this repository to try to make changes to make it a login with no security.  The purpose was to learn more about php, javascript, and databases used for a login to a website.  Still not working.
+I forked this repository to try to make changes to make it a login with no security.  The purpose was to learn more about php, javascript, and databases used for a login to a website.  Still not working. Started Summer 2017.
 
 
 
