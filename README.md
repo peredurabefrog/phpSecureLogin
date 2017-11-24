@@ -1,48 +1,59 @@
-phpSecureLogin
-==============
+The basic php logic is based on peredurabefrog's phpSecureLogin mixed with DiegoSynth forked solution.
 
-*************************************************************************************************************************
+This version of code separates the back-end and the front-end. 
+So the communication between the back-end and front-end is going to happen via JSON request-response. 
 
-I'VE ABANDONED THIS PROJECT AS MAINTAINING IT IS TAKING UP TOO MUCH OF MY TIME.  IF ANYONE WANTS TO CLONE IT, OR WOULD LIKE LIKE TO BE ADDED TO THE ADMINS FOR THIS LOCATION, AND CONTINUE THE WORK (INCLUDING UPDATING THE WIKIHOW PAGE) I'D BE ONLY TOO GRATEFUL.
+>user management via php session
 
-THE MOST OBVIOUS THING THAT NEEDS DOING IS TO CLOSE THE MASSIVE XSS HOLE IN THE REFERRALS TO THE ERROR PAGE.
+PHP is going to handle the session management. In case of an active session it forwards the request (+expands it with logged in user information) for anouther API and forwards the response. In this example for anouther php file.
 
-I NOW CONSIDER THAT THE  BEST SOLUTION IS TO USE A GOOD PHP FRAMEWORK.  THE CODE IN A FRAMEWORK IS ALWAYS GOING TO BE OF HIGHER
-QUALITY THAN ANYTHING I COULD WRITE.
+Please note that in this solution PHP session manager is on the same machine (domain) as the front-end, this is because the session tracking.
 
-THIS EXISTING CODE IS NOT OF PRODUCTION QUALITY AND SHOULD NOT BE USED AS-IS IN A PRODUCTION SETTING
+The front-end uses jQuery and jQuery Mobile.
 
-*************************************************************************************************************************
+Test login information
+Username : test_user Email : test@example.com Password : 6ZaxN2Vzm9NUJT2y
 
-NOTE: THIS DOES WORK, BUT IT'S FAR FROM FINISHED!
+Database preparation stored under php/config.php. In case you want to move this file to a more secure place you have to add the correct path in UserManager.php before the config.php.
 
-A secure login module for PHP.  The idea is that it should be easily plugged into any PHP project.
+The session related actions are separated for performance reason. The session handling having in one php file is possible, but not adviesed, because during login the session check classes are not required. Also for development purpose it is easier to work in smaller separeted modules. If there is some issue with one module you can easily work on it without dangering the other modules.
 
-The base code for this project has been taken from WikiHow:
+In php for message forward curl is used. You need to install it before to use it. (On ubuntu 16.04 these packages needs to be installed: php-curl, curl ) After install if you use apache2, then you need to restart it.
 
-http://www.wikihow.com/Create-a-Secure-Login-Script-in-PHP-and-MySQL
+Current solution workflow/functionalities:
+- index.html is a login and default landing page. During page load there is a logged in user check with ProcessSession.php. If there is an active session solution navigates to securePage.html. On securePage.html same check if user do not have active session solution navigates to index.html.
 
-A version of the WikiHow page is saved with this project as 'php-secure-login.odt'.
+- By pressing the login button on index.html page. E-mail and hashed password sent for ProcessLogin.php which check the access with help of user manager. If u/p matches it creates a login record, sends back successful auth and creates an active session for the user.  If pass not matches, but user exists creates a error record in the database.
 
-The idea is to modify the code so that it forms a module that can easily be plugged into other PHP projects requiring login functionality.
+- Logout button is on the securePage.html it closes the session and navigates back to index.html page. Logout sent for ProcessLogout.php
 
-When it's done, users will be able to select from a variety of configuration options such as:
+- OtherAPI call works from securePage. Pressing  the "Trigger other API request" button sends a request for ProcessUserAction.php which forwards the request for anouther PHP with help of curl. (curl needs to be installed). The response message is going to be displayed under the button. The button press is with timestamp. You can check the pressed timesstamp in the response.
 
-* Connect via http or https
-* Specify database connection details
-* Elect whether all users should be allowed to register or whether only certain types of users should be able to do registrations (i.e. register other users)
+In the configuration file you have to specify a folder for session tracking with cookies. PHP should have read and write permissions for it. (php/SessionFunction.php)
 
-You'll need Apache, mySQL and PHP5.3.x installed and working.  On Windows and Mac, an XAMPP installation will be fine.
+>user management via JWT
 
-You'll also need to create a database called 'secure_login'.  When you've done that you need to create a user with just SELECT, UPDATE and DELETE privileges on the 'secure_login' database.  The user's name and password are given in the psl-config.php file.  If you're not intending to contribute, you can choose whatever login details you want, but you'll have to change the psl-config.php file to match your own details.
+In the past years application authentication started to move toward JWT (JSON Web Token). For example Angular2 is not supporting php's session handling mechanism in the old fashion way. In order to authenticate we have to set up a such an authentication mechanism as well. 
 
-The code to create and populate the necessary tables is included in the 'secure_login.sql' file.  It populates the members table with a single user with the following details:
+There are pretty good JWT implementations for example:
+https://github.com/lcobucci/jwt
+https://www.sitepoint.com/php-authorization-jwt-json-web-tokens/
 
-Username	: test_user 
-Email		: test@example.com 
-Password	: 6ZaxN2Vzm9NUJT2y
+In this solution I used "lcobucci/jwt" 3.2.1 version. 
+On their github repository (linked above) the developers wrote that they change the usage way.
 
-The registration page is now implemented, so you can register as many users as you like.  However you may still need the test_user for testing purposes in the future when we come to adding roles to users.
+Please note that if you want use the php-jwt you have to install that component first (composer php repository manager installation needs to be done first) and only after it you can use it. 
 
-I'm happy to receive any suggestions (peredur@peredur.net).  And if anyone would like to help...
+You can do that in the next way:
+Navigate to "php-jwt" and in the command line execute the next command: 
+~> composer require lcobucci/jwt --update-no-dev
+This will install the vendor package. 
 
+After installation you have to link the "vendor/autoload.php" to your php file.
+Example done in "JWTManager.php" .
+
+Please note that namespaces can be tricky 
+In "JWTManager.php" you can find a line on the top like this: "use Lcobucci\JWT\Builder;" 
+This means after you have imported the vendor solution (require / include) then you have to add this line which will tell that from the "Lcobucci\JWT" namespace it will use the "Builder" class. Which means after the "use" you do not declare a physical path you just specify a namespace within the solution.
+
+With php-jwt there is one url called which will forward the requests based on messagename to the right php process. This simplifies the url management at the front-end side. 

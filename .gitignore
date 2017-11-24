@@ -1,3 +1,8 @@
 *~
 netbeans/*
 *#
+/.gitignore
+/includes/psl-config.php
+/php-jwt/composer.lock
+/php-jwt/composer.json
+/php-jwt/vendor/
